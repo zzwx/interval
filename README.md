@@ -50,11 +50,11 @@ func main() {
 	fmt.Println(r.Wrap(120))     //=> 20
 	fmt.Println(r.Validate(120)) //=> 0, error(120 is outside of range [0,100])
 	fmt.Println(r.Test(120))     //=> false
-	fmt.Println(r.ToString())    //=> [0,100]
+	fmt.Println(r)               //=> [0,100] (uses Stringer interface)
 }
 ```
 
-[Go Playground](https://play.golang.org/p/8b1uVREbels)
+[Go Playground](https://play.golang.org/p/c_cqte_YoAe)
 
 ## API
 

@@ -127,8 +127,9 @@ func (v RangeFloat32) Test(value float32) bool {
 	return TestFloat32(v.min, v.max, value, v.minExclusive, v.maxExclusive)
 }
 
-// ToString returns a string representation of the range using range notation
+// String returns a string representation of the range using range notation
 // (https://en.wikipedia.org/wiki/Interval_(mathematics)#Classification_of_intervals).
-func (v RangeFloat32) ToString() string {
+// String implements Stringer interface.
+func (v RangeFloat32) String() string {
 	return ToStringFloat32(v.min, v.max, v.minExclusive, v.maxExclusive)
 }

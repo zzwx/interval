@@ -74,12 +74,12 @@ func ExampleRangeInt8() {
 	fmt.Println(r.Wrap(120))     //=> 20
 	fmt.Println(r.Validate(120)) //=> (0, error(120 is outside of range [0,100]))
 	fmt.Println(r.Test(120))     //=> false
-	fmt.Println(r.ToString())    //=> [0,100]
+	fmt.Println(r)    //=> [0,100] (uses Stringer interface)
 	r = NewRangeInt8(100, 0, false, true) // swapped
   fmt.Println(r.Wrap(120))     //=> 20
   fmt.Println(r.Validate(120)) //=> (0, error(120 is outside of range (0,100]))
   fmt.Println(r.Test(120))     //=> false
-  fmt.Println(r.ToString())    //=> (0,100]
+  fmt.Println(r)    //=> (0,100] (uses Stringer interface)
 	// Output:
 	// 20
 	// 0 120 is outside of range [0,100]

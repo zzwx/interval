@@ -127,8 +127,9 @@ func (v RangeInt) Test(value int) bool {
 	return TestInt(v.min, v.max, value, v.minExclusive, v.maxExclusive)
 }
 
-// ToString returns a string representation of the range using range notation
+// String returns a string representation of the range using range notation
 // (https://en.wikipedia.org/wiki/Interval_(mathematics)#Classification_of_intervals).
-func (v RangeInt) ToString() string {
+// String implements Stringer interface.
+func (v RangeInt) String() string {
 	return ToStringInt(v.min, v.max, v.minExclusive, v.maxExclusive)
 }
