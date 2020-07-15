@@ -74,19 +74,23 @@ func MinInt(x, y int) int {
 	return x
 }
 
-// MinMaxInt swaps x and y to assure that x <= y.
-func MinMaxInt(x, y int) (int, int) {
-	if x > y {
-		return y, x
+// MinMaxInt swaps min and max to assure that min < max.
+// It is automatically called for all the rest of the functions
+// that do not expect minExclusive or maxExclusive.
+func MinMaxInt(min, max int) (int, int) {
+	if min > max {
+		return max, min
 	}
-	return x, y
+	return min, max
 }
-// MinMaxExclusiveInt swaps x and y and minExclusive, maxExclusive to assure that x <= y together with the interval endings.
-func MinMaxExclusiveInt(x, y int, minExclusive, maxExclusive bool) (int, int, bool, bool) {
-	if x > y {
-		return y, x, maxExclusive, minExclusive
+// MinMaxExclusiveInt swaps min and max as well as minExclusive, maxExclusive correspondingly
+// to assure that min < max together with the interval endings. It is automatically called for all
+// the rest of the functions that expect minExclusive or maxExclusive.
+func MinMaxExclusiveInt(min, max int, minExclusive, maxExclusive bool) (int, int, bool, bool) {
+	if min > max {
+		return max, min, maxExclusive, minExclusive
 	}
-	return x, y, minExclusive, maxExclusive
+	return min, max, minExclusive, maxExclusive
 }
 
 // Range represents a struct containing all the fields defining a range.

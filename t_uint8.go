@@ -74,19 +74,23 @@ func MinUint8(x, y uint8) uint8 {
 	return x
 }
 
-// MinMaxUint8 swaps x and y to assure that x <= y.
-func MinMaxUint8(x, y uint8) (uint8, uint8) {
-	if x > y {
-		return y, x
+// MinMaxUint8 swaps min and max to assure that min < max.
+// It is automatically called for all the rest of the functions
+// that do not expect minExclusive or maxExclusive.
+func MinMaxUint8(min, max uint8) (uint8, uint8) {
+	if min > max {
+		return max, min
 	}
-	return x, y
+	return min, max
 }
-// MinMaxExclusiveUint8 swaps x and y and minExclusive, maxExclusive to assure that x <= y together with the interval endings.
-func MinMaxExclusiveUint8(x, y uint8, minExclusive, maxExclusive bool) (uint8, uint8, bool, bool) {
-	if x > y {
-		return y, x, maxExclusive, minExclusive
+// MinMaxExclusiveUint8 swaps min and max as well as minExclusive, maxExclusive correspondingly
+// to assure that min < max together with the interval endings. It is automatically called for all
+// the rest of the functions that expect minExclusive or maxExclusive.
+func MinMaxExclusiveUint8(min, max uint8, minExclusive, maxExclusive bool) (uint8, uint8, bool, bool) {
+	if min > max {
+		return max, min, maxExclusive, minExclusive
 	}
-	return x, y, minExclusive, maxExclusive
+	return min, max, minExclusive, maxExclusive
 }
 
 // Range represents a struct containing all the fields defining a range.

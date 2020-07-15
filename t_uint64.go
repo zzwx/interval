@@ -74,19 +74,23 @@ func MinUint64(x, y uint64) uint64 {
 	return x
 }
 
-// MinMaxUint64 swaps x and y to assure that x <= y.
-func MinMaxUint64(x, y uint64) (uint64, uint64) {
-	if x > y {
-		return y, x
+// MinMaxUint64 swaps min and max to assure that min < max.
+// It is automatically called for all the rest of the functions
+// that do not expect minExclusive or maxExclusive.
+func MinMaxUint64(min, max uint64) (uint64, uint64) {
+	if min > max {
+		return max, min
 	}
-	return x, y
+	return min, max
 }
-// MinMaxExclusiveUint64 swaps x and y and minExclusive, maxExclusive to assure that x <= y together with the interval endings.
-func MinMaxExclusiveUint64(x, y uint64, minExclusive, maxExclusive bool) (uint64, uint64, bool, bool) {
-	if x > y {
-		return y, x, maxExclusive, minExclusive
+// MinMaxExclusiveUint64 swaps min and max as well as minExclusive, maxExclusive correspondingly
+// to assure that min < max together with the interval endings. It is automatically called for all
+// the rest of the functions that expect minExclusive or maxExclusive.
+func MinMaxExclusiveUint64(min, max uint64, minExclusive, maxExclusive bool) (uint64, uint64, bool, bool) {
+	if min > max {
+		return max, min, maxExclusive, minExclusive
 	}
-	return x, y, minExclusive, maxExclusive
+	return min, max, minExclusive, maxExclusive
 }
 
 // Range represents a struct containing all the fields defining a range.

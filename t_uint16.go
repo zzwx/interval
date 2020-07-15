@@ -74,19 +74,23 @@ func MinUint16(x, y uint16) uint16 {
 	return x
 }
 
-// MinMaxUint16 swaps x and y to assure that x <= y.
-func MinMaxUint16(x, y uint16) (uint16, uint16) {
-	if x > y {
-		return y, x
+// MinMaxUint16 swaps min and max to assure that min < max.
+// It is automatically called for all the rest of the functions
+// that do not expect minExclusive or maxExclusive.
+func MinMaxUint16(min, max uint16) (uint16, uint16) {
+	if min > max {
+		return max, min
 	}
-	return x, y
+	return min, max
 }
-// MinMaxExclusiveUint16 swaps x and y and minExclusive, maxExclusive to assure that x <= y together with the interval endings.
-func MinMaxExclusiveUint16(x, y uint16, minExclusive, maxExclusive bool) (uint16, uint16, bool, bool) {
-	if x > y {
-		return y, x, maxExclusive, minExclusive
+// MinMaxExclusiveUint16 swaps min and max as well as minExclusive, maxExclusive correspondingly
+// to assure that min < max together with the interval endings. It is automatically called for all
+// the rest of the functions that expect minExclusive or maxExclusive.
+func MinMaxExclusiveUint16(min, max uint16, minExclusive, maxExclusive bool) (uint16, uint16, bool, bool) {
+	if min > max {
+		return max, min, maxExclusive, minExclusive
 	}
-	return x, y, minExclusive, maxExclusive
+	return min, max, minExclusive, maxExclusive
 }
 
 // Range represents a struct containing all the fields defining a range.

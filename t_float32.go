@@ -74,19 +74,23 @@ func MinFloat32(x, y float32) float32 {
 	return x
 }
 
-// MinMaxFloat32 swaps x and y to assure that x <= y.
-func MinMaxFloat32(x, y float32) (float32, float32) {
-	if x > y {
-		return y, x
+// MinMaxFloat32 swaps min and max to assure that min < max.
+// It is automatically called for all the rest of the functions
+// that do not expect minExclusive or maxExclusive.
+func MinMaxFloat32(min, max float32) (float32, float32) {
+	if min > max {
+		return max, min
 	}
-	return x, y
+	return min, max
 }
-// MinMaxExclusiveFloat32 swaps x and y and minExclusive, maxExclusive to assure that x <= y together with the interval endings.
-func MinMaxExclusiveFloat32(x, y float32, minExclusive, maxExclusive bool) (float32, float32, bool, bool) {
-	if x > y {
-		return y, x, maxExclusive, minExclusive
+// MinMaxExclusiveFloat32 swaps min and max as well as minExclusive, maxExclusive correspondingly
+// to assure that min < max together with the interval endings. It is automatically called for all
+// the rest of the functions that expect minExclusive or maxExclusive.
+func MinMaxExclusiveFloat32(min, max float32, minExclusive, maxExclusive bool) (float32, float32, bool, bool) {
+	if min > max {
+		return max, min, maxExclusive, minExclusive
 	}
-	return x, y, minExclusive, maxExclusive
+	return min, max, minExclusive, maxExclusive
 }
 
 // Range represents a struct containing all the fields defining a range.
