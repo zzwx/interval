@@ -35,16 +35,26 @@ go get -u github.com/zzwx/interval
 package main
 
 import (
+	"fmt"
+
 	"github.com/zzwx/interval"
 )
 
 func main() {
-  interval.WrapInt(0, 360, 400) //=> 40
-  interval.WrapInt(0, 360, -90) //=> 270
-  interval.LimitInt(0, 100, 500) //=> 100
-  interval.LimitInt(0, 100, -20) //=> 0
+	fmt.Println(interval.WrapInt(0, 360, 400))  //=> 40
+	fmt.Println(interval.WrapInt(0, 360, -90))  //=> 270
+	fmt.Println(interval.ClampInt(0, 100, 500)) //=> 100
+	fmt.Println(interval.ClampInt(0, 100, -20)) //=> 0
+
+	r := interval.NewRangeFloat64(0, 100, false, false)
+	fmt.Println(r.Wrap(120))     //=> 20
+	fmt.Println(r.Validate(120)) //=> 0, error(120 is outside of range [0,100])
+	fmt.Println(r.Test(120))     //=> false
+	fmt.Println(r.ToString())    //=> [0,100]
 }
 ```
+
+[Go Playground](https://play.golang.org/p/8b1uVREbels)
 
 ## API
 
