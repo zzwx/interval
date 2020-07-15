@@ -1,0 +1,130 @@
+package interval
+
+import (
+	"fmt"
+	"strconv"
+)
+
+// Wrap{{.CT}} normalizes the value that "wraps around" within the [min,max) range.
+// Wrap{{.CT}} always assumes that `min` is [inclusive, and `max` is exclusive).
+func Wrap{{.CT}}(min, max, value {{.T}}) {{.T}} {
+	min, max = MinMax{{.CT}}(min, max)
+	var maxLessMin = max - min
+	for value < min {
+	  value += maxLessMin
+	}
+	for value >= max {
+		value -= maxLessMin
+	}
+	return value
+	//Original implementation is not working well for unsigned types:
+	//return ((value-min)%maxLessMin+maxLessMin)%maxLessMin + min
+}
+
+// Clamp{{.CT}} returns value capped to [min,max] range. Both ends of this range are inclusive.
+func Clamp{{.CT}}(min, max, value {{.T}}) {{.T}} {
+	min, max = MinMax{{.CT}}(min, max)
+	return Max{{.CT}}(min, Min{{.CT}}(max, value))
+}
+
+// Validate{{.CT}} tests whether the value is within [(min,max)] range (depending on minExclusive and maxExclusive).
+// It returns the value if it is within the range, otherwise returns 0 and error.
+func Validate{{.CT}}(min, max, value {{.T}}, minExclusive, maxExclusive bool) ({{.T}}, error) {
+	min, max, minExclusive, maxExclusive = MinMaxExclusive{{.CT}}(min, max, minExclusive, maxExclusive)
+	if !Test{{.CT}}(min, max, value, minExclusive, maxExclusive) {
+		return 0, fmt.Errorf("%v is outside of range %v", value, ToString{{.CT}}(min, max, minExclusive, maxExclusive))
+	}
+	return value, nil
+}
+
+// Test{{.CT}} returns true if the value is within [(min,max)] range (depending on minExclusive and maxExclusive).
+func Test{{.CT}}(min, max, value {{.T}}, minExclusive, maxExclusive bool) bool {
+	min, max, minExclusive, maxExclusive = MinMaxExclusive{{.CT}}(min, max, minExclusive, maxExclusive)
+	return !(value < min || value > max || (maxExclusive && (value == max)) || (minExclusive && (value == min)))
+}
+
+// ToString{{.CT}} returns a string representation of the range using range notation
+// (https://en.wikipedia.org/wiki/Interval_(mathematics)#Classification_of_intervals).
+func ToString{{.CT}}(min, max {{.T}}, minExclusive, maxExclusive bool) string {
+	min, max, minExclusive, maxExclusive = MinMaxExclusive{{.CT}}(min, max, minExclusive, maxExclusive)
+	var minBracket = "["
+	if minExclusive {
+		minBracket = "("
+	}
+	var maxBracket = "]"
+	if maxExclusive {
+		maxBracket = ")"
+	}
+	return minBracket + strconv.Format{{.FormatType}}({{.ConvertType}}(min), {{- if .Float -}}'f', -1, {{.BitSize}}{{- else -}}10{{- end -}}) + "," + strconv.Format{{.FormatType}}({{.ConvertType}}(max), {{- if .Float -}}'f', -1, {{.BitSize}}{{- else -}}10{{- end -}}) + maxBracket
+}
+
+// Max{{.CT}} returns the bigger of two numbers.
+func Max{{.CT}}(x, y {{.T}}) {{.T}} {
+	if x < y {
+		return y
+	}
+	return x
+}
+
+// Min{{.CT}} returns the smaller of two numbers.
+func Min{{.CT}}(x, y {{.T}}) {{.T}} {
+	if x > y {
+		return y
+	}
+	return x
+}
+
+// MinMax{{.CT}} swaps x and y to assure that x <= y.
+func MinMax{{.CT}}(x, y {{.T}}) ({{.T}}, {{.T}}) {
+	if x > y {
+		return y, x
+	}
+	return x, y
+}
+// MinMaxExclusive{{.CT}} swaps x and y and minExclusive, maxExclusive to assure that x <= y together with the interval endings.
+func MinMaxExclusive{{.CT}}(x, y {{.T}}, minExclusive, maxExclusive bool) ({{.T}}, {{.T}}, bool, bool) {
+	if x > y {
+		return y, x, maxExclusive, minExclusive
+	}
+	return x, y, minExclusive, maxExclusive
+}
+
+// Range represents a struct containing all the fields defining a range.
+type Range{{.CT}} struct {
+	min          {{.T}}
+	max          {{.T}}
+	minExclusive bool
+	maxExclusive bool
+}
+
+// NewRange{{.CT}} makes a new Range and returns its pointer. Range{{.CT}} can also be created with a Range{{.CT}}{...} literal or new(Range{{.CT}}).
+func NewRange{{.CT}}(min {{.T}}, max {{.T}}, minExclusive bool, maxExclusive bool) *Range{{.CT}} {
+	return &Range{{.CT}}{min: min, max: max, minExclusive: minExclusive, maxExclusive: maxExclusive}
+}
+
+// Wrap does not obey minExclusive and maxExclusive and always assumes [min,max) range.
+func (v Range{{.CT}}) Wrap(value {{.T}}) {{.T}} {
+	return Wrap{{.CT}}(v.min, v.max, value)
+}
+
+// Clamp does not obey minExclusive and maxExclusive and always assumes [min,max] range.
+func (v Range{{.CT}}) Clamp(value {{.T}}) {{.T}} {
+	return Clamp{{.CT}}(v.min, v.max, value)
+}
+
+// Validate tests whether the value is within [(min,max)] range (depending on minExclusive and maxExclusive).
+// It returns the value if it is within the range, otherwise returns 0 and error.
+func (v Range{{.CT}}) Validate(value {{.T}}) ({{.T}}, error) {
+	return Validate{{.CT}}(v.min, v.max, value, v.minExclusive, v.maxExclusive)
+}
+
+// Test returns true if the value is within [(min,max)] range (depending on minExclusive and maxExclusive).
+func (v Range{{.CT}}) Test(value {{.T}}) bool {
+	return Test{{.CT}}(v.min, v.max, value, v.minExclusive, v.maxExclusive)
+}
+
+// ToString returns a string representation of the range using range notation
+// (https://en.wikipedia.org/wiki/Interval_(mathematics)#Classification_of_intervals).
+func (v Range{{.CT}}) ToString() string {
+	return ToString{{.CT}}(v.min, v.max, v.minExclusive, v.maxExclusive)
+}
