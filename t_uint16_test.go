@@ -64,25 +64,29 @@ func ExampleToStringUint16() {
 }
 
 func ExampleRangeUint16() {
-	r := NewRangeUint16(0, 100, false, false)
-	fmt.Println(r.Wrap(120))     //=> 20
+	r := NewRangeUint16(10, 100, false, false)
+	fmt.Println(r.Wrap(120))     //=> 30
 	fmt.Println(r.Validate(120)) //=> (0, error(120 is outside of range [0,100]))
 	fmt.Println(r.Test(120))     //=> false
 	fmt.Println(r)    //=> [0,100] (uses Stringer interface)
-	r = NewRangeUint16(100, 0, false, true) // swapped
-  fmt.Println(r.Wrap(120))     //=> 20
+	r = NewRangeUint16(100, 10, false, true) // swapped
+  fmt.Println(r.Wrap(120))     //=> 30
   fmt.Println(r.Validate(120)) //=> (0, error(120 is outside of range (0,100]))
   fmt.Println(r.Test(120))     //=> false
-  fmt.Println(r)    //=> (0,100] (uses Stringer interface)
+  fmt.Println(r.Clamp(120))    //=> 100
+	fmt.Println(r.Clamp(0))      //=> 10
+	fmt.Println(r)    //=> (0,100] (uses Stringer interface)
 	// Output:
-	// 20
-	// 0 120 is outside of range [0,100]
+	// 30
+	// 0 120 is outside of range [10,100]
 	// false
-	// [0,100]
-	// 20
-	// 0 120 is outside of range (0,100]
+	// [10,100]
+	// 30
+	// 0 120 is outside of range (10,100]
 	// false
-	// (0,100]
+	// 100
+	// 10
+	// (10,100]
 }
 
 func ExampleMinMaxUint16() {
