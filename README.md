@@ -1,4 +1,6 @@
-# [github.com/zzwx/interval](https://pkg.go.dev/github.com/zzwx/interval)
+[![github.com/zzwx/interval](./doc/gobadge.svg)](https://pkg.go.dev/github.com/zzwx/interval)
+
+# Interval
 
 Utility for normalizing a numeric range, with a wrapping function useful for polar coordinates.
 
