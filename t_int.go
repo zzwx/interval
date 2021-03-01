@@ -96,7 +96,7 @@ func MinMaxExclusiveInt(min, max int, minExclusive, maxExclusive bool) (int, int
 	return min, max, minExclusive, maxExclusive
 }
 
-// Range represents a struct containing all the fields defining a range.
+// RangeInt represents a struct containing all the fields defining a range.
 type RangeInt struct {
 	min          int
 	max          int

@@ -95,7 +95,7 @@ func MinMaxExclusive{{.CT}}(min, max {{.T}}, minExclusive, maxExclusive bool) ({
 	return min, max, minExclusive, maxExclusive
 }
 
-// Range represents a struct containing all the fields defining a range.
+// Range{{.CT}} represents a struct containing all the fields defining a range.
 type Range{{.CT}} struct {
 	min          {{.T}}
 	max          {{.T}}

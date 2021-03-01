@@ -96,7 +96,7 @@ func MinMaxExclusiveUint16(min, max uint16, minExclusive, maxExclusive bool) (ui
 	return min, max, minExclusive, maxExclusive
 }
 
-// Range represents a struct containing all the fields defining a range.
+// RangeUint16 represents a struct containing all the fields defining a range.
 type RangeUint16 struct {
 	min          uint16
 	max          uint16

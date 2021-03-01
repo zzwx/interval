@@ -96,7 +96,7 @@ func MinMaxExclusiveFloat32(min, max float32, minExclusive, maxExclusive bool) (
 	return min, max, minExclusive, maxExclusive
 }
 
-// Range represents a struct containing all the fields defining a range.
+// RangeFloat32 represents a struct containing all the fields defining a range.
 type RangeFloat32 struct {
 	min          float32
 	max          float32
