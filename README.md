@@ -2,11 +2,11 @@
 
 # Interval
 
-Utility for normalizing a numeric range, with a wrapping function useful for polar coordinates.
+An almost useless utility for normalizing a numeric range, with a wrapping function for polar coordinates, implemented using `go generate`.
 
 It is a **golang clone** of a JavaScript project by [James Talmage](https://github.com/jamestalmage/normalize-range).
 
-For dealing with the strict typing in Go, functions were simply auto-generated functions for all of the following types:
+For dealing with the strict typing in Go, functions were auto-generated for all of the following types:
 
 * `int`
 * `int64`
@@ -23,7 +23,7 @@ For dealing with the strict typing in Go, functions were simply auto-generated f
 
 ## Motivation
 
-I did not investigate whether generating all the variations is the best way or not to deal with all the numeric types. Making functions accept `interface{}` didn't sound like a robust approach. Certainly if only a subset of these auto-generated functions is used, the Go compiler is not going to include them all in the final build. This approach is inspired by [Rob Pike's article](https://blog.golang.org/generate) on code generation. In a meanwhile I found out that Generics may not be an overall remedy, especially where the code should be written differently depending on the actual numeric capacity. I ended up writing a universal code though.
+This approach is inspired by [Rob Pike's article](https://blog.golang.org/generate) on code generation. Until generics are implemented, this is simply an example of code generation, exploiting templates in this case.
 
 ## Installation
 
@@ -67,4 +67,3 @@ https://pkg.go.dev/github.com/zzwx/interval
 Original JavaScript author: [James Talmage](https://github.com/jamestalmage/normalize-range)
 
 MIT © [Anton Veretennikov](https://github.com/zzwx)
-
