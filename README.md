@@ -1,4 +1,4 @@
-[![github.com/zzwx/interval](./doc/gobadge.svg)](https://pkg.go.dev/github.com/zzwx/interval)
+[![https://github.com/zzwx/interval](./doc/gobadge.svg)](https://pkg.go.dev/github.com/zzwx/interval)
 
 # Interval
 
